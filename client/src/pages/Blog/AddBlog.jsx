@@ -27,8 +27,13 @@ import { useFetch } from "@/hooks/use-fetch";
 import Dropzone from "react-dropzone";
 import { GoPlus } from "react-icons/go";
 import Editor from "@/components/Editor";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const AddBlog = () => {
+  const navigate = useNavigate()
+  const user = useSelector((state) => state.user)
+
   const [filePreview, setFilePreview] = useState();
   const [file, setFile] = useState();
 
@@ -51,9 +56,9 @@ const AddBlog = () => {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      category: "",
       title: "",
       slug: "",
-      category: "",
       content: "",
     },
   });
@@ -67,26 +72,35 @@ const AddBlog = () => {
     }
   }, [blogTitle]);
 
-  async function onSubmit(values) {
-    try {
-      const response = await fetch(
-        `${getEnv("VITE_API_BASE_URL")}/category/add-category`,
-        {
-          method: "post",
-          headers: { "Content-type": "application/json" },
-          body: JSON.stringify(values),
+    async function onSubmit(values) {
+      try {
+        const newValues = {...values, author: user.user._id}
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("data", JSON.stringify(newValues));
+  
+        const response = await fetch(
+          `${getEnv("VITE_API_BASE_URL")}/blog/add-blog`,
+          {
+            method: "post",
+            credentials: "include",
+            body: formData,
+          }
+        );
+        const data = await response.json();
+        if (!response.ok) {
+          return showToast("error", data.message);
         }
-      );
-      const data = await response.json();
-      if (!response.ok) {
-        return showToast("error", data.message);
+        // dispatch(setUser(data.user));
+        form.reset()
+        setFile()
+        setFilePreview()
+        navigate('/blog-details')
+        showToast("success", data.message);
+      } catch (error) {
+        showToast("error", data.message);
       }
-      form.reset();
-      showToast("success", data.message);
-    } catch (error) {
-      showToast("error", error.message);
     }
-  }
   // onSubmit={form.handleSubmit(onSubmit)}
 
   const handleFileSelection = (files) => {
@@ -99,8 +113,8 @@ const AddBlog = () => {
   const handleEditorData = (event, editor) => {
     const data = editor.getData()
     form.setValue('content', data)
+    setFile(file)
     console.log(data);
-    
   }
 
   return (

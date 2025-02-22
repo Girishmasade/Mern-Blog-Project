@@ -10,7 +10,39 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useState } from "react";
+import { useFetch } from "@/hooks/use-fetch";
+import { getEnv } from "@/utils/getEnv";
+import { deleteData } from "@/utils/handleDelete";
+import Loading from "@/components/Loading";
 const BlogDetails = () => {
+
+
+  const [refreshData, setRefreshData] = useState(false)
+
+  const { data: blogData, loading, error } = useFetch(`${getEnv('VITE_API_BASE_URL')}/blog/show-blog`, {
+    method: 'get',
+    credentials: 'include'
+}, [refreshData])
+
+// const handleDelete = (id) => {
+//   const response = deleteData(`${getEnv('VITE_API_BASE_URL')}/blog/delete/${id}`)
+//   if (response) {
+//       setRefreshData(!refreshData)
+//       showToast('success', 'Data deleted.')
+//   } else {
+//       showToast('error', 'Data not deleted.')
+//   }
+// }
+
+
+if (loading) return <Loading />
+
+  console.log(blogData);
+  
+
+  if (loading) return <Loading />;
+
   return (
     <div>
     <card>

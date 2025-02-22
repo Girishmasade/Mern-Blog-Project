@@ -6,6 +6,7 @@ import { dbConfig } from './Databse/db.js'
 import authRoute from './routes/auth.route.js'
 import userRoute from './routes/user.route.js'
 import categoryRoute from './routes/category.route.js'
+import blogRouter from './routes/blog.route.js'
 
 dotenv.config()
 
@@ -24,6 +25,7 @@ app.use(cors({
 app.use('/api/auth', authRoute)
 app.use('/api/user', userRoute)
 app.use('/api/category', categoryRoute)
+app.use('/api/blog', blogRouter)
 
 // Database connected in db.js file
 dbConfig()
