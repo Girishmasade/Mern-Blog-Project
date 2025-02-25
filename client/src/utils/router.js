@@ -6,10 +6,18 @@ export const RouteEditCategory = (category_id) => {
     }
 }
 
-export const RouteEditBlog = (Blog_id) => {
-    if (Blog_id) {
-        return `/blog/edit/${Blog_id}`
+export const RouteEditBlog = (blogid) => {
+    if (blogid) {
+        return `/blog/edit/${blogid}`
     } else {
-        return `/blog/edit/:Blog_id`
+        return `/blog/edit/:blogid`
+    }
+}
+
+export const RouteBlogDetails = (category, blog) => {
+    if (!category || !blog) {
+        return '/blog/:category/:blog'
+    } else {
+        return `/blog/${category}/${blog}`
     }
 }

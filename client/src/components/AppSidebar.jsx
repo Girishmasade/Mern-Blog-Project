@@ -18,9 +18,19 @@ import { FaBloggerB } from "react-icons/fa6";
 import { FaComments } from "react-icons/fa6";
 import { FaUserAlt } from "react-icons/fa";
 import { GoDotFill } from "react-icons/go";
+import { useFetch } from '@/hooks/use-fetch';
+import { getEnv } from '@/utils/getEnv';
 
 
 const AppSidebar = () => {
+
+          const {
+            data: categoryData,
+          } = useFetch(`${getEnv("VITE_API_BASE_URL")}/category/all-category`, {
+            method: "get",
+            credentials: "include",
+          },);
+
     return (
         <Sidebar>
           <SidebarHeader className='bg-white'>
@@ -73,12 +83,18 @@ const AppSidebar = () => {
                 <SidebarGroupLabel>Categories</SidebarGroupLabel>
                 <SidebarMenu>
 
-                    <SidebarMenuItem>
-                        <SidebarMenuButton>
+                    {
+                        categoryData && categoryData.category.length>0 && 
+                        categoryData.category.map((item) =>                     
+                        <SidebarMenuItem key={item._id}>
+                        <SidebarMenuButton >
                         <GoDotFill />
-                            <Link to='/'>Categories item</Link>
+                            <Link to='/'>{item.name}</Link>
                         </SidebarMenuButton>
-                    </SidebarMenuItem>
+                    </SidebarMenuItem>)
+                    }
+
+
 
                 </SidebarMenu>
             </SidebarGroup>

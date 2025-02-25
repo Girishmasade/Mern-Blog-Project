@@ -5,12 +5,12 @@ const blogSchema = new Schema (
         author: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,
-            ref: 'User'
+            ref: 'user'
         },
         category: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,
-            ref: 'Category'
+            ref: 'category'
         },
         title: {
             type: String,
