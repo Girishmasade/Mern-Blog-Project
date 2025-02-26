@@ -44,7 +44,7 @@ const BlogDetails = () => {
       }
   }
 
-  console.log(blogData);
+  // console.log(blogData);
   
 
   if (loading) return <Loading />;

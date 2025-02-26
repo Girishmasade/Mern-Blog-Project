@@ -33,7 +33,7 @@ import { useFetch } from "@/hooks/use-fetch";
 const EditBlog = () => {
 
   const { blogid } = useParams()
-  console.log(blogid);
+  // console.log(blogid);
   
 
   const navigate = useNavigate();
@@ -55,7 +55,7 @@ const EditBlog = () => {
     [blogid]
 );
 
-  console.log(blogData);
+  // console.log(blogData);
 
   const [filePreview, setPreview] = useState();
   const [file, setFile] = useState();

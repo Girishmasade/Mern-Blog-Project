@@ -29,7 +29,7 @@ const Profile = () => {
   const [file, setFile] = useState();
 
   const user = useSelector((state) => state.user);
-  console.log(user);
+  // console.log(user);
 
   const {
     data: userData,
@@ -39,7 +39,7 @@ const Profile = () => {
     method: "get",
     credentials: "include",
   });
-  console.log(userData);
+  // console.log(userData);
 
   const dispatch = useDispatch();
 

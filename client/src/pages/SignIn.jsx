@@ -20,6 +20,7 @@ import { getEnv } from "@/utils/getEnv";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/redux/user/user.slice";
 import GoogleLogin from "@/components/GoogleLogin";
+import { FaArrowAltCircleLeft } from "react-icons/fa";
 
 const SignIn = () => {
 
@@ -65,6 +66,11 @@ const SignIn = () => {
   return (
     <div className="flex justify-center items-center h-screen w-screen">
       <Card className="w-[400px] p-5">
+       <div className="flex items-center justify-center text-2xl">
+       <Link to='/'>
+        <FaArrowAltCircleLeft />
+        </Link>
+       </div>
         <CardHeader>
           <CardTitle className="text-2xl text-center">Login Here!</CardTitle>
         </CardHeader>

@@ -114,7 +114,7 @@ const AddBlog = () => {
     const data = editor.getData()
     form.setValue('content', data)
     setFile(file)
-    console.log(data);
+    // console.log(data);
   }
 
   return (

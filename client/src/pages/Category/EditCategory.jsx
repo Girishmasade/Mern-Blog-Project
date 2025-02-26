@@ -25,7 +25,7 @@ const EditCategory = () => {
       credentials: "include",
     }, [category_id]);
 
-    console.log(categoryData);
+    // console.log(categoryData);
     
 
     const formSchema = z.object({

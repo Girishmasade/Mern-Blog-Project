@@ -2,6 +2,7 @@ import CommentCount from "@/components/CommentCount";
 import Comments from "@/components/Comments";
 import LikeCoount from "@/components/LikeCoount";
 import Loading from "@/components/Loading";
+import RelatedBlogs from "@/components/RelatedBlogs";
 import { Avatar } from "@/components/ui/avatar";
 import { useFetch } from "@/hooks/use-fetch";
 import { getEnv } from "@/utils/getEnv";
@@ -13,22 +14,22 @@ import { useParams } from "react-router-dom";
 
 const SingleBlogDetails = () => {
 
-  const { blog } = useParams();
+  const { blog, category} = useParams();
   const { data, loading, error } = useFetch(
     `${getEnv("VITE_API_BASE_URL")}/blog/get-blog/${blog}`,
     {
       method: "get",
       credentials: "include",
-    }
+    },[blog, category]
   );
 
   if (loading) return <Loading />;
 
   return (
-    <div className="flex justify-between gap-20">
+    <div className="md:flex-nowrap flex-wrap flex justify-between gap-20">
       {data && data.blog && (
         <>
-          <div className="border rounded w-[70%] py-2 px-3.5">
+          <div className="border rounded md:w-[70%] w-full py-2 px-3.5">
             <h1 className="font-bold text-2xl mb-5">{data.blog.title}</h1>
             <div className="flex justify-between items-center">
               <div className="flex justify-between items-center gap-5">
@@ -72,7 +73,9 @@ const SingleBlogDetails = () => {
         </>
       )}
 
-      <div className="border rounded w-[30%]"></div>
+      <div className="border rounded md:w-[30%] w-full">
+        <RelatedBlogs props={{ category: category, currentBlog: blog}}/>
+      </div>
     </div>
   );
 };
